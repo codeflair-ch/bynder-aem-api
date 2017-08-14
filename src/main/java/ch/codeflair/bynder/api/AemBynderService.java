@@ -1,10 +1,27 @@
 package ch.codeflair.bynder.api;
+/**
+ * Copyright 2017 codeflair Gmbh (http://www.codeflair.ch)
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ *  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ *  Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ *  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+ *  OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ *  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 import org.apache.sling.api.resource.Resource;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509TrustManager;
-import java.util.Map;
+import java.util.List;
+
 
 /**
  * Interface to access the AEM Bynder Service.
@@ -71,11 +88,22 @@ public interface AemBynderService {
     String getDerivative(String bynderMediaId, String derivativeName, Resource resource);
 
     /**
-     * returns the configured focus point for the bynder image
+     * returns the configured focus point for the bynder image. The focus point is available after
+     * invoking processBynderMediaItem on the resource.
      *
      * @param bynderMediaId the bynder media id of the bynder asset
      * @param resource      the resource for which to get the focus point
      * @return the focus point data.
      */
     BynderFocusPoint getFocuspoint(String bynderMediaId, Resource resource);
+
+    /**
+     * returns the missing bynder (static) derivatives for a given resource. The missing resources will be available
+     * after
+     * invoking processBynderMediaItem on the resource.
+     * @param resource the resource containing a bynder reference
+     * @return a list of all static derivatives configured either in the global (OSGi) or component configuration which
+     * are not found on the currently set bynder asset.
+     */
+    List<String> getMissingDerivatives(Resource resource);
 }
