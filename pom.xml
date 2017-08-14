@@ -18,11 +18,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.codeflair.bynder-aem</groupId>
-    <version>1.0.2</version>
+    <version>1.0.9</version>
     <artifactId>bynder-aem.apis</artifactId>
     <packaging>bundle</packaging>
     <name>Bynder-AEM - Apis</name>
-    <description>Bynder AEM Apis</description>
+    <description>APIs for the Bynder AEM integration</description>
+    <url>https://github.com/codeflair-ch/bynder-aem-api</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
     <build>
         <plugins>
             <plugin>
@@ -42,7 +49,57 @@
                         </Export-Package>
                     </instructions>
                 </configuration>
+            </plugin> <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+            <extensions>true</extensions>
+            <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
     <profiles>
@@ -92,4 +149,27 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:git://github.com/codeflair-ch/bynder-aem-api.git</connection>
+        <developerConnection>scm:git:ssh://github.com:codeflair-ch/bynder-aem-api.git</developerConnection>
+        <url>https://github.com/codeflair-ch/bynder-aem-api</url>
+    </scm>
+    <developers>
+        <developer>
+            <name>Ben Zahler</name>
+            <email>ben-at-codeflair.ch</email>
+            <organization>codeflair gmbh</organization>
+            <organizationUrl>http://www.codeflair.ch</organizationUrl>
+        </developer>
+    </developers>
 </project>
